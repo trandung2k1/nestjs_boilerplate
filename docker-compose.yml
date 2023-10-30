@@ -1,0 +1,32 @@
+version: '3.5'
+services:
+  app:
+    image: nestjs:v1
+    container_name: nestjs-container
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    expose:
+      - 4000
+    ports:
+      - 4000:4000
+    volumes:
+      - './src:/app/src'
+      - /app/node_modules
+    networks:
+      - trandung
+  mongo:
+    image: mongo:latest
+    container_name: mongodb-container
+    restart: always
+    ports:
+      - 27017:27017
+    volumes:
+      - mongodb:/data/db
+    networks:
+      - trandung
+volumes:
+  mongodb:
+networks:
+  trandung:
